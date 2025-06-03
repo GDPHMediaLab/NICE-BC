@@ -19,6 +19,10 @@ We summarize the key contributions of this work in three-fold: 1) volumetric bod
 
 For research reproducibility and clinical utility, we provided a software named Neoadjuvant Immuno-ChEmotherapy predictor based on Body Composition (NICE-BC), which integrates the above functionalities together.
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/dbcc1e5f-7ea3-4638-9a65-d593d95d4515" width="1000" height="500">
+</p>
+
 # Usage
 
 ## Main Developers
