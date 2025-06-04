@@ -25,6 +25,44 @@ For research reproducibility and clinical utility, we provided a software named 
 
 # Usage
 
+## Method 1: Source Code Installation
+
+To run NICE-BC from source code, follow these steps:
+
+```bash
+git clone https://github.com/zhenweishi/LC-NICER
+cd NICE-BC
+conda create -n nice_bc python=3.12
+conda activate nice_bc
+pip install -r requirements.txt
+python main.py
+```
+
+## Method 2: Binary Release
+
+For convenience, we provide pre-compiled binary packages for different operating systems. You can download the appropriate binary for your system from the [Releases](https://github.com/zhenweishi/LC-NICER/releases) page:
+
+- **Windows**: Download `NICE-BC_windows_amd64.zip`
+- **Linux**: Download `NICE-BC_linux_amd64.tar.gz`
+- **macOS**: Download `NICE-BC_macos_arm64.dmg`
+
+After downloading, simply run the executable file directly without any additional installation steps.
+
+## Important Note: AutoPanoM Model Access
+
+⚠️ **The AutoPanoM deep learning models used in this software are not publicly available.** 
+
+To obtain access to the AutoPanoM v1.0.0.0 model for body composition segmentation, please contact:
+
+📧 **Prof. Zhenwei Shi**: [shizhenwei@gdph.org.cn](mailto:shizhenwei@gdph.org.cn)
+
+In your request, please include:
+- Your name and institutional affiliation
+- Intended research purpose
+- Brief description of your project
+
+The model access is provided for research purposes only and requires approval from the development team.
+
 ## Main Developers
 
  - [Prof. Zhenwei Shi](https://github.com/zhenweishi) <sup/>1, 2
