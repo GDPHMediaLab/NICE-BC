@@ -69,7 +69,7 @@ When you run NICE-BC, the software automatically creates two folders in the same
 
 **Windows:**
 ```
-# If executable is in: C:\Users\YourName\Downloads\NICE-BC_windows_amd64\
+# If executable file is C:\Users\YourName\Downloads\NICE-BC_windows_amd64\NICE-BC.exe
 # Generated folders will be at:
 C:\Users\YourName\Downloads\NICE-BC_windows_amd64\cache\
 C:\Users\YourName\Downloads\NICE-BC_windows_amd64\results\
@@ -77,7 +77,7 @@ C:\Users\YourName\Downloads\NICE-BC_windows_amd64\results\
 
 **Linux:**
 ```bash
-# If executable is in: /home/username/NICE-BC_linux_amd64/
+# If executable file is /home/username/NICE-BC_linux_amd64/NICE-BC
 # Generated folders will be at:
 /home/username/NICE-BC_linux_amd64/cache/
 /home/username/NICE-BC_linux_amd64/results/
@@ -85,10 +85,10 @@ C:\Users\YourName\Downloads\NICE-BC_windows_amd64\results\
 
 **macOS:**
 ```bash
-# If executable is in: /Users/username/Applications/NICE-BC.app/
+# If executable file is /Users/username/Applications/NICE-BC.app
 # Generated folders will be at:
-/Users/username/Applications/NICE-BC.app/cache/
-/Users/username/Applications/NICE-BC.app/results/
+/Users/username/Applications/cache/
+/Users/username/Applications/results/
 ```
 
 ### 📋 Viewing Results:
