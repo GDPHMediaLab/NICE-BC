@@ -1,5 +1,7 @@
 import time
 import os 
+import sys
+import tempfile
 
 from pathlib import Path
 
@@ -16,6 +18,15 @@ import pickle
 import time
 
 def get_file_md5(file_path):
+    """
+    Calculate MD5 hash value of file
+    
+    Args:
+        file_path: File path
+        
+    Returns:
+        str: MD5 hash value
+    """
     md5_hash = hashlib.md5()
     with open(file_path, "rb") as f:
         # Read in chunks, suitable for large files
@@ -23,8 +34,34 @@ def get_file_md5(file_path):
             md5_hash.update(chunk)
     return md5_hash.hexdigest()
 
-CACHE_DIR = Path("./cache")
-CACHE_DIR.mkdir(parents=True, exist_ok=True)
+def get_cache_dir():
+    """获取缓存目录，在可执行文件同一目录下"""
+    if getattr(sys, 'frozen', False):
+        # 如果是PyInstaller打包的程序，在可执行文件同一目录下创建cache
+        exe_dir = Path(sys.executable).parent
+        cache_dir = exe_dir / "cache"
+    else:
+        # 开发环境
+        cache_dir = Path("./cache")
+    
+    cache_dir.mkdir(parents=True, exist_ok=True)
+    return cache_dir
+
+def get_results_dir():
+    """获取结果目录，在可执行文件同一目录下"""
+    if getattr(sys, 'frozen', False):
+        # 如果是PyInstaller打包的程序，在可执行文件同一目录下创建results
+        exe_dir = Path(sys.executable).parent
+        results_dir = exe_dir / "results"
+    else:
+        # 开发环境
+        results_dir = Path("./results")
+    
+    results_dir.mkdir(parents=True, exist_ok=True)
+    return results_dir
+
+CACHE_DIR = get_cache_dir()
+RESULTS_DIR = get_results_dir()
 
 def test(pre_path, post_path, callback=None):
     """
@@ -108,8 +145,7 @@ def calc_phase(image_path, bone_path, bc_path, task_name):
             seg_one_whole[:, :, :, value - 1][seg_one == value] = 1
 
         results_3d = metrics.compute_metrics_3d(img_one, seg_one_whole, img_spacing, composition_dict)
-        this_output_metric_dir = "results"
-        Path(this_output_metric_dir).mkdir(parents=True, exist_ok=True)
+        this_output_metric_dir = RESULTS_DIR
 
         filename = task_name + "_" + Path(image_path).name.replace(".nii.gz", "")
         metrics.save_results_3d(composition_dict, results_3d, start_level, end_level, this_output_metric_dir, filename)
@@ -163,7 +199,7 @@ def calc(sex, smoking_status, type_, tps, height, pre_results_3d, post_results_3
     
     y = 1 / (1 + np.exp(-z))
     
-    with open(f"results/{task_name}_prediction.txt", "a") as f:
+    with open(RESULTS_DIR / f"{task_name}_prediction.txt", "a") as f:
         f.write(f"sex = {sex}\n")
         f.write(f"smoking_status1 = {smoking_status1}\n")
         f.write(f"smoking_status2 = {smoking_status2}\n")
@@ -252,27 +288,60 @@ def run(pre_path, post_path, parameters, preprocessed_files=None):
     print(f"Using post bone segmentation: {post_bone_path}", flush=True)
     print(f"callback@post_bone_path@{post_bone_path}", flush=True)
 
-    print("Calculating Pre phase metrics...", flush=True)
+    print("Calculating Pre and Post phase metrics in parallel...", flush=True)
+    
     pre_results_path = CACHE_DIR / f"{pre_md5}_results.pkl"
-    if not pre_results_path.exists():
-        pre_results_3d = calc_phase(pre_path, pre_bone_path, pre_bc_path, task_name)
+    post_results_path = CACHE_DIR / f"{post_md5}_results.pkl"
+    
+    # Check which calculations are needed
+    need_pre_calc = not pre_results_path.exists()
+    need_post_calc = not post_results_path.exists()
+    
+    pre_results_3d = None
+    post_results_3d = None
+    
+    if need_pre_calc or need_post_calc:
+        from concurrent.futures import ProcessPoolExecutor
+        
+        futures = {}
+        with ProcessPoolExecutor(max_workers=2) as executor:
+            if need_pre_calc:
+                print("Submitting Pre phase calculation...", flush=True)
+                futures['pre'] = executor.submit(calc_phase, pre_path, pre_bone_path, pre_bc_path, task_name)
+            
+            if need_post_calc:
+                print("Submitting Post phase calculation...", flush=True)
+                futures['post'] = executor.submit(calc_phase, post_path, post_bone_path, post_bc_path, task_name)
+            
+            # Wait for completion and get results
+            if 'pre' in futures:
+                print("Waiting for Pre phase calculation to complete...", flush=True)
+                pre_results_3d = futures['pre'].result()
+                print("Pre phase calculation completed", flush=True)
+                
+            if 'post' in futures:
+                print("Waiting for Post phase calculation to complete...", flush=True)
+                post_results_3d = futures['post'].result()
+                print("Post phase calculation completed", flush=True)
+    
+    # Handle caching and loading after parallel execution
+    if need_pre_calc and pre_results_3d is not None:
         with open(pre_results_path, "wb") as f:
             pickle.dump(pre_results_3d, f)
-    else:
+        print(f"callback@pre_results_path@{pre_results_path}", flush=True)
+    elif not need_pre_calc:
         with open(pre_results_path, "rb") as f:
             pre_results_3d = pickle.load(f)
-    print(f"callback@pre_results_path@{pre_results_path}", flush=True)
+        print(f"callback@pre_results_path@{pre_results_path}", flush=True)
     
-    print("Calculating Post phase metrics...", flush=True)
-    post_results_path = CACHE_DIR / f"{post_md5}_results.pkl"
-    if not post_results_path.exists():
-        post_results_3d = calc_phase(post_path, post_bone_path, post_bc_path, task_name)
+    if need_post_calc and post_results_3d is not None:
         with open(post_results_path, "wb") as f:
             pickle.dump(post_results_3d, f)
-    else:
+        print(f"callback@post_results_path@{post_results_path}", flush=True)
+    elif not need_post_calc:
         with open(post_results_path, "rb") as f:
             post_results_3d = pickle.load(f)
-    print(f"callback@post_results_path@{post_results_path}", flush=True)
+        print(f"callback@post_results_path@{post_results_path}", flush=True)
 
     print("Calculating final result...", flush=True)
     y = calc(parameters["sex"], parameters["smoking"], parameters["types"], parameters["tps"], parameters["height"], pre_results_3d, post_results_3d, task_name)

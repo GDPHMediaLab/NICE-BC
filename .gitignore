@@ -11,3 +11,5 @@ build/
 bak/
 *.xml
 demo/
+release/
+*.spec
