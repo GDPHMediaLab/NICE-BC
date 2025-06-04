@@ -44,7 +44,7 @@ For convenience, we provide pre-compiled binary packages for different operating
 
 - **Windows**: Download `NICE-BC_windows_amd64.zip`
 - **Linux**: Download `NICE-BC_linux_amd64.tar.gz`
-- **macOS**: Download `NICE-BC_macos_arm64.dmg`
+<!-- - **macOS**: Download `NICE-BC_macos_arm64.dmg` -->
 
 After downloading, simply run the executable file directly without any additional installation steps.
 
@@ -83,13 +83,13 @@ C:\Users\YourName\Downloads\NICE-BC_windows_amd64\results\
 /home/username/NICE-BC_linux_amd64/results/
 ```
 
-**macOS:**
+<!-- **macOS:**
 ```bash
 # If executable file is /Users/username/Applications/NICE-BC.app
 # Generated folders will be at:
 /Users/username/Applications/cache/
 /Users/username/Applications/results/
-```
+``` -->
 
 ### 📋 Viewing Results:
 - **Segmentation outputs**: Check the `results/` folder for DICOM files with segmented body composition masks
