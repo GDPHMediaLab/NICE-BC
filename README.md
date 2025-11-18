@@ -30,7 +30,7 @@ For research reproducibility and clinical utility, we provided a software named 
 To run NICE-BC from source code, follow these steps:
 
 ```bash
-git clone https://github.com/zhenweishi/LC-NICER
+git clone https://github.com/GDPHMediaLab/NICE-BC
 cd NICE-BC
 conda create -n nice_bc python=3.12
 conda activate nice_bc
@@ -40,7 +40,7 @@ python main.py
 
 ## Method 2: Binary Release
 
-For convenience, we provide pre-compiled binary packages for different operating systems. You can download the appropriate binary for your system from the [Releases](https://github.com/zhenweishi/LC-NICER/releases) page:
+For convenience, we provide pre-compiled binary packages for different operating systems. You can download the appropriate binary for your system from the [Releases](https://github.com/GDPHMediaLab/NICE-BC/releases) page:
 
 - **Windows**: Download `NICE-BC_windows_amd64.zip`
 - **Linux**: Download `NICE-BC_linux_amd64.tar.gz`
