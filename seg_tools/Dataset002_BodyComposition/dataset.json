@@ -1,0 +1,15 @@
+{
+    "channel_names": {
+        "0": "CT"
+    },
+    "labels": {
+        "background": 0,
+        "Muscle": 1,
+        "IMAT": 2,
+        "VAT": 3,
+        "SAT": 4,
+        "Bone": 5
+    },
+    "numTraining": 70,
+    "file_ending": ".nii.gz"
+}
