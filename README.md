@@ -51,7 +51,7 @@ If you want to train your own body composition segmentation models using nnU-Net
 ## Workflow Overview
 
 ```
-1. Data Input (DICOM CT scans)
+1. Data Input (CT scans)
    ↓
 2. Spine Localization (3d_lowres, step_size=1)
    ↓
