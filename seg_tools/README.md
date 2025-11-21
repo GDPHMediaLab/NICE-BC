@@ -1,5 +1,8 @@
 # Training Instructions
 
+<img width="1687" height="698" alt="image" src="https://github.com/user-attachments/assets/30520304-1c46-4a85-970a-8c4206621a0f" />
+
+
 ## Installation
 
 First, you need to install the nnU-Net library. Follow the official installation instructions:
