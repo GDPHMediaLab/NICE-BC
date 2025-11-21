@@ -1,5 +1,8 @@
 # NICE-BC Application Usage Guide
 
+<img width="1196" height="820" alt="450649075-dbcc1e5f-7ea3-4638-9a65-d593d95d4515" src="https://github.com/user-attachments/assets/352e0c5b-01a6-410a-b964-56db6456c61a" />
+
+
 ## Installation Methods
 
 ### Method 1: Running from Source Code
