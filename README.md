@@ -1,4 +1,8 @@
 # Neoadjuvant Immuno-ChEmotherapy predictor based on Body Composition (NICE-BC)
+
+<img width="4482" height="1915" alt="图片 1" src="https://github.com/user-attachments/assets/9197c80e-dd8b-4faa-ba96-d78a852161cb" />
+
+
 ## Clinical Demand
 Existing tumor-intrinsic biomarkers incompletely predict pathological complete response (pCR) following neoadjuvant immunochemotherapy (NICT) in patients with non–small-cell lung cancer (NSCLC). Although body composition may influence immunometabolic status, whether three-dimensional CT–derived body composition metrics can serve as complementary and potentially feasible predictors of pCR remains unclear. To evaluate association of three-dimensional CT–derived body composition quantification with pCR in patients receiving NICT for NSCLC. Automated, three-dimensional CT–derived dynamic body composition quantification, particularly baseline skeletal muscle and subcutaneous adipose tissue volumes and their longitudinal changes during NICT, are independently associated with pCR in NSCLC. Incorporating these modifiable imaging-based body composition biomarkers into predictive models significantly improves performance beyond that achieved with clinical variables alone.
 
