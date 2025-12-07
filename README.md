@@ -31,6 +31,19 @@ For research reproducibility and clinical utility, we provided a software named 
 
 This repository provides a complete workflow for body composition analysis and treatment response prediction. Follow the guides below based on your needs:
 
+## 🔧 For Data Preprocessing: Preparing CT Images
+
+If you need to preprocess raw DICOM CT scans for body composition analysis:
+
+👉 **See [preprocessing/README.md](preprocessing/README.md)** for detailed instructions on:
+- DICOM to NIfTI conversion
+- Image resampling and spatial standardization
+- HU windowing
+- Intensity normalization
+- Body composition segmentation using nnU-Net
+
+The preprocessing pipeline (`preprocessing/pipeline.ipynb`) provides a complete workflow to transform raw DICOM files into normalized, segmented images ready for analysis.
+
 ## 📱 For End Users: Using the NICE-BC Application
 
 If you want to use the NICE-BC software for body composition analysis and treatment response prediction:
